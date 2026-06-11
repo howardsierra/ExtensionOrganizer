@@ -1,0 +1,105 @@
+/* Extension Organizer — sky-blue identity, per-category accent colors. */
+
+/* ---------- toolbar ---------- */
+#extorg_toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0 10px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 6px 0;
+    background: inherit;
+}
+#extorg_toolbar .extorg-tb-icon { opacity: .55; }
+#extorg_search { flex: 1; min-width: 0; }
+.extorg-tb-btn {
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    opacity: .65;
+    transition: opacity .15s, background .15s, color .15s;
+}
+.extorg-tb-btn:hover { opacity: 1; background: rgba(111, 184, 255, .18); }
+.extorg-tb-btn.extorg-on { opacity: 1; color: #6FB8FF; }
+
+/* ---------- category sections ---------- */
+.extorg-cat { margin-bottom: 10px; }
+
+.extorg-cat-head {
+    --extorg-accent: #6FB8FF;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    letter-spacing: .02em;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--extorg-accent) 26%, transparent),
+        color-mix(in srgb, var(--extorg-accent) 5%, transparent));
+    border-left: 3px solid var(--extorg-accent);
+}
+.extorg-cat-head:hover {
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--extorg-accent) 36%, transparent),
+        color-mix(in srgb, var(--extorg-accent) 8%, transparent));
+}
+.extorg-cat-caret {
+    font-size: .8em;
+    color: var(--extorg-accent);
+    transition: transform .18s ease;
+}
+.extorg-cat-caret.extorg-rot { transform: rotate(-90deg); }
+.extorg-cat-name { flex: 1; }
+.extorg-cat-count {
+    padding: 1px 9px;
+    border-radius: 999px;
+    font-size: .72em;
+    background: color-mix(in srgb, var(--extorg-accent) 22%, transparent);
+    color: color-mix(in srgb, var(--extorg-accent) 65%, white);
+    border: 1px solid color-mix(in srgb, var(--extorg-accent) 40%, transparent);
+}
+
+.extorg-cat-body {
+    padding: 6px 0 0 10px;
+    border-left: 2px solid color-mix(in srgb, var(--extorg-accent, #6FB8FF) 30%, transparent);
+    margin-left: 6px;
+}
+.extorg-collapsed .extorg-cat-body { display: none; }
+
+/* ---------- per-drawer controls (organize mode only) ---------- */
+.extorg-pin, .extorg-cat-select { display: none; }
+
+.extorg-organize .extorg-pin {
+    display: inline-block;
+    margin-left: 8px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, .3);
+    transition: color .15s, transform .15s;
+}
+.extorg-organize .extorg-pin:hover { transform: scale(1.2); }
+.extorg-pin.extorg-pinned { color: #FFD700 !important; }
+/* pinned stars stay visible even outside organize mode */
+.extorg-pin.extorg-pinned { display: inline-block; margin-left: 8px; cursor: pointer; }
+
+.extorg-organize .extorg-cat-select {
+    display: inline-block;
+    width: auto;
+    max-width: 140px;
+    margin-left: auto;
+    margin-right: 6px;
+    font-size: .8em;
+    padding: 1px 6px;
+    height: auto;
+}
+
+/* ---------- search hiding ---------- */
+.extorg-hide { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    .extorg-cat-caret, .extorg-tb-btn, .extorg-pin { transition: none !important; }
+}
