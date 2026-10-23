@@ -1,9 +1,9 @@
-/* Extension Organizer — sky-blue identity, per-category accent colors. */
+/* Extension Organizer — sky-blue identity, per-type / per-category accent colors. */
 
 /* ---------- toolbar ---------- */
 #extorg_toolbar {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 6px;
     margin: 4px 0 10px;
     position: sticky;
@@ -11,6 +11,11 @@
     z-index: 5;
     padding: 6px 0;
     background: inherit;
+}
+#extorg_toolbar .extorg-tb-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 #extorg_toolbar .extorg-tb-icon { opacity: .55; }
 #extorg_search { flex: 1; min-width: 0; }
@@ -24,11 +29,46 @@
 .extorg-tb-btn:hover { opacity: 1; background: rgba(111, 184, 255, .18); }
 .extorg-tb-btn.extorg-on { opacity: 1; color: #6FB8FF; }
 
+/* ---------- type chips (color legend + filter) ---------- */
+#extorg_types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+#extorg_types:empty { display: none; }
+.extorg-chip {
+    --extorg-type: #7E8799;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: .78em;
+    cursor: pointer;
+    user-select: none;
+    color: color-mix(in srgb, var(--extorg-type) 70%, white);
+    background: color-mix(in srgb, var(--extorg-type) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--extorg-type) 45%, transparent);
+    transition: background .15s, color .15s;
+}
+.extorg-chip b {
+    font-size: .9em;
+    opacity: .8;
+}
+.extorg-chip:hover { background: color-mix(in srgb, var(--extorg-type) 28%, transparent); }
+.extorg-chip.extorg-on {
+    background: var(--extorg-type);
+    color: #111;
+    border-color: var(--extorg-type);
+}
+
 /* ---------- category sections ---------- */
-.extorg-cat { margin-bottom: 10px; }
+.extorg-cat {
+    --extorg-accent: #6FB8FF;
+    margin-bottom: 10px;
+}
 
 .extorg-cat-head {
-    --extorg-accent: #6FB8FF;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -54,6 +94,7 @@
     transition: transform .18s ease;
 }
 .extorg-cat-caret.extorg-rot { transform: rotate(-90deg); }
+.extorg-cat-icon { color: var(--extorg-accent); font-size: .9em; }
 .extorg-cat-name { flex: 1; }
 .extorg-cat-count {
     padding: 1px 9px;
@@ -70,6 +111,48 @@
     margin-left: 6px;
 }
 .extorg-collapsed .extorg-cat-body { display: none; }
+
+/* ---------- per-drawer type color coding ---------- */
+.extorg-drawer {
+    --extorg-type: #7E8799;
+    border-left: 3px solid var(--extorg-type);
+    border-radius: 6px;
+    padding-left: 5px;
+    margin-bottom: 4px;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--extorg-type) 9%, transparent),
+        transparent 45%);
+}
+
+.extorg-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 auto 0 8px;
+    font-size: .68em;
+    font-weight: 600;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.extorg-type-badge, .extorg-src-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    line-height: 1.5;
+}
+.extorg-type-badge {
+    color: color-mix(in srgb, var(--extorg-type) 70%, white);
+    background: color-mix(in srgb, var(--extorg-type) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--extorg-type) 45%, transparent);
+}
+.extorg-src-badge {
+    opacity: .85;
+    border: 1px solid currentColor;
+}
+.extorg-src-core  { color: #9FB3C8; }
+.extorg-src-third { color: #F7C873; }
 
 /* ---------- per-drawer controls (organize mode only) ---------- */
 .extorg-pin, .extorg-cat-select { display: none; }
@@ -90,7 +173,7 @@
     display: inline-block;
     width: auto;
     max-width: 140px;
-    margin-left: auto;
+    margin-left: 6px;
     margin-right: 6px;
     font-size: .8em;
     padding: 1px 6px;
@@ -101,5 +184,5 @@
 .extorg-hide { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
-    .extorg-cat-caret, .extorg-tb-btn, .extorg-pin { transition: none !important; }
+    .extorg-cat-caret, .extorg-tb-btn, .extorg-pin, .extorg-chip { transition: none !important; }
 }
