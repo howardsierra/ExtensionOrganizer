@@ -8,9 +8,32 @@
     margin: 4px 0 10px;
     position: sticky;
     top: 0;
-    z-index: 5;
-    padding: 6px 0;
+    /* Sit above drawers (and any positioned content inside them) as they scroll under */
+    z-index: 30;
+    isolation: isolate;
+    padding: 6px 4px 8px;
+    /* Must be opaque: the panel itself is transparent, so `inherit` let the
+       sections show straight through the bar while scrolling. */
+    background-color: #1b1c21;
+    border-bottom: 1px solid var(--SmartThemeBorderColor, rgba(0, 0, 0, .5));
+    box-shadow: 0 6px 10px -6px rgba(0, 0, 0, .55);
+}
+/* Use the theme's panel tint, made fully opaque, where the browser supports it */
+@supports (color: rgb(from red r g b / 1)) {
+    #extorg_toolbar {
+        background-color: rgb(from var(--SmartThemeBlurTintColor, #1b1c21) r g b / 1);
+    }
+}
+/* Cover the scroll container's top padding so content can't peek out above the bar */
+#extorg_toolbar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 16px;
     background: inherit;
+    z-index: -1;
 }
 #extorg_toolbar .extorg-tb-row {
     display: flex;

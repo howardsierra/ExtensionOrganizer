@@ -6,7 +6,7 @@
     "js": "index.js",
     "css": "style.css",
     "author": "howardsierra",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "homePage": "https://github.com/howardsierra/ExtensionOrganizer",
     "auto_update": false
 }
